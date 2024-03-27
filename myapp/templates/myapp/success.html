@@ -1,0 +1,26 @@
+{% extends 'myapp/base.html' %} {% block content %}
+
+<div class="video-container">
+    <video autoplay loop muted playsinline class="background-clip">
+        <source src="static/mysite/images/home.mp4" type="video/mp4" alt="" width="1528" height="695">
+    </video>
+</div>
+
+<style>
+    .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+{% endblock %}

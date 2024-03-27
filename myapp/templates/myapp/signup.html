@@ -1,0 +1,86 @@
+{% extends 'myapp/base.html' %} {% block content %}
+
+<!-- Section: Design Block -->
+<section class="vh-100" style="background-color: #A50022;">
+  <div class="container py-0 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0">
+            <div class="col-md-6 col-lg-5 d-none d-md-block">
+              <img src="https://lh3.googleusercontent.com/p/AF1QipONi5JmVN6iK7tDh5etSvaZhMex60IpGyTbNTws=s1360-w1360-h1020"
+                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem; width: 100%; height: 100%;" />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+
+                <form action="{% url 'signup' %}" method="post" id="registration-form">
+                  {% csrf_token %}
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <i class="fas fa-cubes fa-2x " style="color: #ff6219;"></i>
+                    <span class="h1 fw-bold mb-0">Classroom Reservation</span>
+                  </div>
+
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Create your account</h5>
+                  <div class="mb-3">
+                    <label class="form-label" for="form3Example3c">Email</label>
+                    <input name='email' type="email" id="email" class="form-control form-control-lg" required>
+                </div>
+                  <div class="mb-3">
+                      <label class="form-label" for="form3Example1c">Username</label>
+                      <input name='name' type="text" id="name" class="form-control form-control-lg" required>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="form3Example4c">Password</label>
+                    <input name='password' type="password" id="password" class="form-control form-control-lg" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="form3Example4c">Confirm Password</label>
+                    <input name='confirm_password' type="password" id="confirm_password" class="form-control form-control-lg" required>
+                    <span id='message'></span>
+                </div>
+                <br>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                  <button class="btn btn-outline-success" form="registration-form" style="height: 2.7rem;">Register</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <!-- Section: Design Block -->
+
+  <script>
+    var password = document.getElementById("password");
+    var confirm_password = document.getElementById("confirm_password");
+    var registerButton = document.getElementById("register_button");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+
+    function enableRegisterButton() {
+        if (password.value === confirm_password.value) {
+            registerButton.disabled = false;
+        } else {
+            registerButton.disabled = true;
+        }
+    }
+
+    password.addEventListener('change', validatePassword);
+    confirm_password.addEventListener('keyup', validatePassword);
+    password.addEventListener('change', enableRegisterButton);
+    confirm_password.addEventListener('keyup', enableRegisterButton);
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'myapp/base.html' %} {% block content %}
+<title>Background Image Example</title>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10 col-xs-12">
+            <div class="custom-block bg-white shadow-lg">
+                <div class="card-header" style="background-color:#A50022; color: white;">
+                    <div class="card-title h3 mb-0 text-center">Find Room</div>
+                </div>
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <form action="{% url 'findclassroom' %}" method="post" id="find-form">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="building" class="control-labell">Building</label>
+                                <input name='building' class="form-control rounded-0" type="text" id="building"
+                                    value="{% if data.building %}{{data.building}}{% endif %}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="floor" class="control-labell">Floor</label>
+                                <input name='floor' id="floor" class="form-control rounded-0" type="text"
+                                    value="{% if data.floor %}{{data.floor}}{% endif %}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="date" class="control-labell">Date</label>
+                                <input name='date' id="date" class="form-control rounded-0" type="date"
+                                    value="{% if data.date %}{{data.date}}{% endif %}" required>
+                            </div>
+                            <br>
+                            {% if error %}
+                            <div class="alert alert-danger">
+                                {{error}}
+                            </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center">
+                    <div class="d-grid gap-2" style="justify-content: center;">
+                        <button class="btn btn-dark" form="find-form"
+                            style="background-color:#FFFFFF; width: 150px">Find</button>
+                    </div>
+
+                    <style>
+                        .btn-dark:hover {
+                            background-color: #A50022 !important;
+                            color: white !important;
+                        }
+
+                        .btn-dark {
+                            color: black !important;
+                        }
+                    </style>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

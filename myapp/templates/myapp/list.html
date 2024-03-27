@@ -1,0 +1,84 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+<div class="container py-2">
+    <h3>{{msg}}</h3>
+    <div class="card rounded-0 mb-5">
+        <div class="card-header">
+            <div class="card-title h3 mb-0" style="display: block;">Classroom List</div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+                {% for row in classroom_list %}
+                <!-- Card List-->
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center; margin-bottom: 15px;">{{row.room_name}}</h5>
+                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                        {% if row.image %}
+                        <img src="{{ row.image.url }}" alt="รูปภาพห้อง" class="card-img">
+                        {% else %}
+                        <p>No image</p>
+                        {% endif %}
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Building: {{row.building}}</li>
+                        <li class="list-group-item">Seats: {{row.total}}</li>
+                        <li class="list-group-item">Date: {{row.date}}</li>
+                        <select class="form-select" id="time-select-{{ row.id }}" aria-label="Default select example" style="border-radius: 0; background-color: #F8F8F8; border: 0px;">
+                            <option selected disabled label="-- Please select a time period --"></option>
+                            <option value="09:25-12:00">09:25-12:00</option>
+                            <option value="13:00-15:45">13:00-15:45</option>
+                            <option value="15:45-18:30">15:45-18:30</option>
+                        </select>
+                    </ul>
+                    <div class="card-footer text-center">
+                        <form action="{% url 'bookings' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="classroom_id" value="{{row.id}}">
+                            <input type="hidden" name="no_seats" value="{{row.total}}"> <!-- เปลี่ยนจำนวนในโค้ดเท่านั้นเด้อ -->
+                            <input type="hidden" name="time" id="time-input-{{ row.id }}" value="">
+                            <button class="btn btn-outline-success" id="book-now-btn-{{ row.id }}" disabled>Book Now</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- Card List-->
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.form-select').forEach(item => {
+        item.addEventListener('change', event => {
+            const classroomId = item.getAttribute('id').replace('time-select-', '');
+            const selectedTime = event.target.value;
+            document.getElementById('time-input-' + classroomId).value = selectedTime;
+        });
+    });
+
+    document.querySelectorAll('.form-select').forEach(item => {
+        item.addEventListener('change', event => {
+            const classroomId = item.getAttribute('id').replace('time-select-', '');
+            const selectedTime = event.target.value;
+            document.getElementById('time-input-' + classroomId).value = selectedTime;
+            const bookNowBtn = document.getElementById('book-now-btn-' + classroomId);
+            if (selectedTime) {
+                bookNowBtn.removeAttribute('disabled');
+            } else {
+                bookNowBtn.setAttribute('disabled', 'disabled');
+            }
+        });
+    });
+</script>
+
+<style>
+    .container-fluid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+</style>
+
+{% endblock %}

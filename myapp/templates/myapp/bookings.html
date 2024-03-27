@@ -1,0 +1,52 @@
+{% extends 'myapp/base.html' %} {% block content %}
+<div class="container py-5">
+    <div class="alert alert-success rounded-0 my-3">
+        <h3 class="mb-0">Your booking has been confirmed!</h3>
+    </div>
+    <div class="text-center">
+        <form action="{% url 'seebookings' %}" method="post">
+            {% csrf_token %}
+            <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#myModal">
+           Details
+        </button>
+            <button type="submit" class="btn btn-outline-success">OK</button>
+        </form>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="fade modal" id="myModal">
+    <div class="modal-dialog rounded-0 modal-dialog-centered">
+        <div class="modal-content rounded-0">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Booking Details</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Room name:</b> {{book.room_name}}</li>
+                    <li class="list-group-item"><b>Building:</b> {{book.building}}</li>
+                    <li class="list-group-item"><b>Floor:</b> {{book.floor}}</li>
+                    <li class="list-group-item"><b>Number of seats:</b> {{book.total}}</li>
+                    <li class="list-group-item"><b>Date:</b> {{book.date}}</li>
+                    <!-- <li class="list-group-item"><b>Time create:</b> {{book.time_create}}</li> -->
+                    <li class="list-group-item"><b>Time period:</b> {{book.time_period}}</li>
+                </ul>
+
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer py-1">
+                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">OK</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
