@@ -1,2 +1,3 @@
 Classroom Reservation
-by Chawanwit, Peeranat and Panus
+by Chawanwit, Peerawat and Panus
+Electronics and Computer System Engineer at Silpakorn University
